@@ -5,7 +5,7 @@ export const onFollow = async (id: string) => {
   try {
     const followedUser = await followUser(id);
 
-    revalidatePath("/");
+    // revalidatePath("/");
 
     if (followedUser) {
       revalidatePath(`${followedUser.following.username}`);
@@ -20,7 +20,7 @@ export const onFollow = async (id: string) => {
 export const onUnfollow = async (id: string) => {
   try {
     const unfollowedUser = await unfollowUser(id);
-    revalidatePath("/"); //?? why revalidate this?
+    // revalidatePath("/"); //?? why revalidate this?
     if (unfollowedUser) {
       revalidatePath(`/${unfollowedUser.following.username}`);
     }
