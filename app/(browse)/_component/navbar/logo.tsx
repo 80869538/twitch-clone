@@ -8,7 +8,10 @@ const font = Poppins({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
-export const Logo = () => {
+interface logoProps {
+  logoText?: string;
+}
+export const Logo = ({logoText = "Let's Play"}: logoProps) => {
   return (
     <Link href="/">
       <div className="flex items-center gap-x-4 hover:opacity-75 transition">
@@ -17,7 +20,7 @@ export const Logo = () => {
         </div>
         <div className={cn("hidden lg:block", font.className)}>
           <p className="text-lg font-semibold">GameHub</p>
-          <p className="text-xs text-muted-foreground">Let&apos;s Play</p>
+          <p className="text-xs text-muted-foreground">{logoText}</p>
         </div>
       </div>
     </Link>

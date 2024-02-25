@@ -5,10 +5,10 @@ import {Suspense} from "react";
 const BrowseLayout = ({children}: {children: React.ReactNode}) => {
   return (
     <>
-      <Navbar />
+      <Navbar searchBar dashboard />
       <div className="flex h-full pt-20">
         <Suspense fallback={<SidebarSkeleton />}>
-          <Sidebar />
+          <Sidebar followingDisplay recommendedDisplay />
         </Suspense>
         <Container>{children}</Container>
       </div>
