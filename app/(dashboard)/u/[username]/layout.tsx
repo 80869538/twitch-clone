@@ -18,6 +18,7 @@ const CreatorLayout = async ({params, children}: CreatorLayoutProps) => {
       <Navbar logoText="Creator dashboard" />
       <div className="flex h-full pt-20">
         <Sidebar toggleDisplayText="Dashboard" navigationDisplay />
+
         <Container>{children}</Container>
       </div>
     </>
