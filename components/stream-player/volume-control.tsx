@@ -1,6 +1,7 @@
 "use client";
 
 import {Volume1, Volume2, VolumeX} from "lucide-react";
+
 import {Hint} from "@/components/hint";
 import {Slider} from "@/components/ui/slider";
 
@@ -17,6 +18,7 @@ export const VolumeControl = ({
 }: VolumeControlProps) => {
   const isMuted = value === 0;
   const isAboveHalf = value > 50;
+
   let Icon = Volume1;
 
   if (isMuted) {

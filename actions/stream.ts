@@ -35,9 +35,11 @@ export const updateStream = async (values: Partial<Stream>) => {
         ...validData,
       },
     });
+
     revalidatePath(`/u/${self.username}/chat`);
     revalidatePath(`/u/${self.username}`); //why
     revalidatePath(`/${self.username}`); //why
+
     return stream;
   } catch {
     throw new Error("Internal Error");

@@ -4,8 +4,9 @@ import {useRef, useState, useEffect} from "react";
 import {Participant, Track} from "livekit-client";
 import {useTracks} from "@livekit/components-react";
 import {useEventListener} from "usehooks-ts";
-import {FullscreenControl} from "./fullscreen-control";
+
 import {VolumeControl} from "./volume-control";
+import {FullscreenControl} from "./fullscreen-control";
 
 interface LiveVideoProps {
   participant: Participant;
@@ -14,8 +15,38 @@ interface LiveVideoProps {
 export const LiveVideo = ({participant}: LiveVideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [volume, setVolume] = useState(0);
+
+  const onVolumeChange = (value: number) => {
+    console.log("volume change");
+    setVolume(+value);
+    if (videoRef?.current) {
+      videoRef.current.muted = value === 0;
+      console.log(videoRef.current.muted);
+      videoRef.current.volume = +value * 0.01;
+    }
+  };
+
+  const toggleMute = () => {
+    console.log("mute");
+    const isMuted = volume === 0;
+
+    setVolume(isMuted ? 50 : 0);
+
+    if (videoRef?.current) {
+      videoRef.current.muted = !isMuted;
+      console.log(videoRef.current.muted);
+
+      videoRef.current.volume = isMuted ? 0.5 : 0;
+    }
+  };
+
+  useEffect(() => {
+    onVolumeChange(0);
+    console.log("use effect");
+  }, []);
 
   const toggleFullscreen = () => {
     if (isFullscreen) {
@@ -29,29 +60,9 @@ export const LiveVideo = ({participant}: LiveVideoProps) => {
     const isCurrentlyFullscreen = document.fullscreenElement !== null;
     setIsFullscreen(isCurrentlyFullscreen);
   };
-  const onVolumeChange = (value: number) => {
-    setVolume(+value);
-    if (videoRef?.current) {
-      videoRef.current.muted = value === 0;
-      videoRef.current.volume = +value * 0.01;
-    }
-  };
-  const toggleMute = () => {
-    const isMuted = volume === 0;
-
-    setVolume(isMuted ? 50 : 0);
-
-    if (videoRef?.current) {
-      videoRef.current.muted = !isMuted;
-      videoRef.current.volume = isMuted ? 0.5 : 0;
-    }
-  };
-
-  useEffect(() => {
-    onVolumeChange(0);
-  }, []);
 
   useEventListener("fullscreenchange", handleFullscreenChange, wrapperRef);
+
   useTracks([Track.Source.Camera, Track.Source.Microphone])
     .filter((track) => track.participant.identity === participant.identity)
     .forEach((track) => {
@@ -59,6 +70,7 @@ export const LiveVideo = ({participant}: LiveVideoProps) => {
         track.publication.track?.attach(videoRef.current);
       }
     });
+
   return (
     <div ref={wrapperRef} className="relative h-full flex">
       <video ref={videoRef} width="100%" />
