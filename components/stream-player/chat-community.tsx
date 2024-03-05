@@ -19,7 +19,6 @@ export const ChatCommunity = ({
   const [value, setValue] = useState("");
   const debouncedValue = useDebounce<string>(value, 500);
   const participants = useParticipants();
-  console.log(participants);
   const onChange = (newValue: string) => {
     setValue(newValue);
   };
@@ -57,7 +56,7 @@ export const ChatCommunity = ({
       <p className="text-center text-sm text-muted-foreground hidden last:block p-2">
         No results
       </p>
-      {participants.map((participant) => (
+      {filteredParticipants.map((participant) => (
         <CommunityItem
           key={participant.identity}
           hostName={hostName}

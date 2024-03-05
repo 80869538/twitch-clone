@@ -19,7 +19,6 @@ const Search = () => {
       },
       {skipEmptyString: true}
     );
-    console.log(url);
     router.push(url);
   };
   const onClear = () => {
