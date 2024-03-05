@@ -1,6 +1,11 @@
 # Fullstack Twitch Clone: Next.js 14, Livestreaming, Online chat, React, Prisma, Tailwind, MySQL
 
+## Home Page
+
 ![Home Page](assets/home-page.png)
+
+## Streaming Page
+
 ![Streaming Page](assets/streaming-page.png)
 
 Key Features:
@@ -50,6 +55,12 @@ git clone https://github.com/80869538/twitch-clone.git
 
 ```shell
 npm i
+```
+
+### Setup MySQL
+
+```shell
+docker-compose up
 ```
 
 ### Setup .env file
